@@ -8,7 +8,7 @@ class Home extends Component {
       id,
       title: faker.lorem.sentence(),
       body: faker.lorem.sentences(10),
-      imageUrl: `https://loremflickr.com/320/240?lock=${id}`,
+      imageUrl: `https://picsum.photos/320/240?image=${120 + id}`,
     })),
   };
 
