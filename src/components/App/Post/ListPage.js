@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {range} from 'lodash';
 import faker from 'faker';
 
-class Home extends Component {
+class ListPage extends Component {
   state = {
     posts: range(1, 3).map(id => ({
       id,
@@ -34,4 +34,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default ListPage;

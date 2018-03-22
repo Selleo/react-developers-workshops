@@ -1,18 +1,27 @@
 import React from 'react';
+import {NavLink as RouterNavLink} from 'react-router-dom';
+import {Nav, Navbar, NavItem, NavLink} from 'reactstrap';
 
 export default () => (
-  <nav className="bg-dark navbar navbar-expand navbar-dark">
-    <a href="/" className="navbar-brand">
-      Home
-    </a>
-    <ul className="navbar-nav ml-auto">
-      <li className="nav-item">
-        <a
-          href="https://github.com/Selleo/react-developers-workshops"
-          className="nav-link">
-          Github
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <Navbar className="bg-dark navbar-dark navbar-expand">
+    <Nav navbar>
+      <NavItem>
+        <NavLink tag={RouterNavLink} to="/posts">
+          Posts
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink tag={RouterNavLink} to="/router">
+          Router
+        </NavLink>
+      </NavItem>
+    </Nav>
+    <Nav navbar className="ml-auto">
+      <NavItem>
+        <NavLink href="https://github.com/Selleo/react-developers-workshops">
+          GitHub
+        </NavLink>
+      </NavItem>
+    </Nav>
+  </Navbar>
 );
