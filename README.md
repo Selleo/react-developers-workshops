@@ -1,5 +1,13 @@
 # [React Developers Workshops](https://github.com/Selleo/react-developers-workshops)
 
+by [React Developers @ Selleo](https://selleo.com/react-js)
+
+Start Workshop online with
+
+[codesandbox.io](https://codesandbox.io/s/github/Selleo/react-developers-workshops)
+    
+or on your computer:
+
     git clone git@github.com:Selleo/react-developers-workshops.git
     cd react-developers-workshops
     yarn
