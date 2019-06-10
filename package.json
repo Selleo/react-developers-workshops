@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "bootstrap": "next",
+    "bootstrap": "^4.3.1",
     "classnames": "^2.2.5",
     "faker": "^4.1.0",
     "lodash": "^4.17.5",
