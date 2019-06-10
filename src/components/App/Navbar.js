@@ -1,6 +1,6 @@
 import React from 'react';
-import {NavLink as RouterNavLink} from 'react-router-dom';
-import {Nav, Navbar, NavItem, NavLink} from 'reactstrap';
+import { NavLink as RouterNavLink } from 'react-router-dom';
+import { Nav, Navbar, NavItem, NavLink } from 'reactstrap';
 
 export default () => (
   <Navbar className="bg-dark navbar-dark navbar-expand">

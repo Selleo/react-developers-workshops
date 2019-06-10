@@ -1,5 +1,5 @@
-import React, {Component, Fragment} from 'react';
-import {BrowserRouter, Redirect, Route} from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Navbar from './Navbar';

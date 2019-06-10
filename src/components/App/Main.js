@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default ({children}) => (
+export default ({ children }) => (
   <main className="container-fluid">{children}</main>
 );

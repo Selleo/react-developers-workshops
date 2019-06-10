@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {range} from 'lodash';
+import React, { Component } from 'react';
+import { times } from 'lodash';
 import faker from 'faker';
 
 class ListPage extends Component {
   state = {
-    posts: range(1, 3).map(id => ({
+    posts: times(2).map(id => ({
       id,
       title: faker.lorem.sentence(),
       body: faker.lorem.sentences(10),
@@ -14,10 +14,10 @@ class ListPage extends Component {
 
   render() {
     return (
-      <div className="d-flex align-content-sm-stretch flex-wrap">
+      <div className="d-flex flex-wrap">
         {this.state.posts.map(post => (
-          <div key={post.id} style={{padding: '1rem'}}>
-            <div className="card" style={{width: '18rem'}}>
+          <div key={post.id} style={{ padding: '1rem' }}>
+            <div className="card" style={{ width: '18rem' }}>
               <img
                 className="card-img-top"
                 src={post.imageUrl}
