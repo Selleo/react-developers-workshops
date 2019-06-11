@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { times } from 'lodash';
 import faker from 'faker';
 
+import PostCard from './PostCard';
+import PostQuickAdd from './PostQuickAdd';
+
 class ListPage extends Component {
   state = {
-    posts: times(2).map(id => ({
+    posts: times(3).map(id => ({
       id,
       title: faker.lorem.sentence(),
       body: faker.lorem.sentences(10),
@@ -12,24 +15,23 @@ class ListPage extends Component {
     })),
   };
 
+  addPost = post => {
+    this.setState({
+      posts: [post, ...this.state.posts],
+    });
+  };
+
   render() {
     return (
-      <div className="d-flex flex-wrap">
-        {this.state.posts.map(post => (
-          <div key={post.id} style={{ padding: '1rem' }}>
-            <div className="card" style={{ width: '18rem' }}>
-              <img
-                className="card-img-top"
-                src={post.imageUrl}
-                alt={post.title}
-              />
-              <div className="card-body">
-                <p className="card-text">{post.title}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <Fragment>
+        <PostQuickAdd onSubmit={this.addPost} />
+
+        <div className="d-flex flex-wrap">
+          {this.state.posts.map(post => (
+            <PostCard key={post.id} {...post} />
+          ))}
+        </div>
+      </Fragment>
     );
   }
 }
