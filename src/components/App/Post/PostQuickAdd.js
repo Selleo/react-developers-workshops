@@ -15,12 +15,15 @@ class PostQuickAdd extends Component {
   };
 
   state = {
+    showForm: false,
     ...this.emptyPost,
   };
 
   handleChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value });
   };
+
+  handleToggle = () => this.setState({ showForm: !this.state.showForm });
 
   handleSubmit = e => {
     e.preventDefault();
@@ -37,23 +40,31 @@ class PostQuickAdd extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <Input
-            type="text"
-            name="title"
-            value={this.state.title}
-            onChange={this.handleChange}
-          />
-          <Input
-            type="text"
-            name="body"
-            value={this.state.body}
-            onChange={this.handleChange}
-          />
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={this.handleToggle}>
+          +
+        </button>
+
+        {this.state.showForm && (
+          <form onSubmit={this.handleSubmit}>
+            <Input
+              type="text"
+              name="title"
+              value={this.state.title}
+              onChange={this.handleChange}
+            />
+            <Input
+              type="text"
+              name="body"
+              value={this.state.body}
+              onChange={this.handleChange}
+            />
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        )}
       </div>
     );
   }
