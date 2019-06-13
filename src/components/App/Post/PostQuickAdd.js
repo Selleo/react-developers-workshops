@@ -60,7 +60,7 @@ class PostQuickAdd extends Component {
               onChange={this.handleChange}
             />
             <button type="submit" className="btn btn-primary">
-              Submit
+              Add Post
             </button>
           </form>
         )}

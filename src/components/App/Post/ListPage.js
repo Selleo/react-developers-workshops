@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { times } from 'lodash';
 
 import { fetchPosts, createPost } from '../../../api';
 import PostCard from './PostCard';

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { fetchPost } from '../../../api';
 
-class PostPage extends Component {
+class DetailsPage extends Component {
   state = {
     post: {},
   };
 
   componentDidMount() {
     fetchPost(this.props.match.params)
-      .then(data =>
-        this.setState({ post: data }),
-      ).catch(() => {
-        this.props.history.push('/posts')
-      })
+      .then(data => this.setState({ post: data }))
+      .catch(() => {
+        this.props.history.push('/posts');
+      });
   }
 
   render() {
@@ -28,9 +28,10 @@ class PostPage extends Component {
         <img src={imageUrl} alt={title} />
         <h2>{title}</h2>
         <p>{body}</p>
+        <NavLink to={`/post/${id}/edit`}>Edit</NavLink>
       </div>
     );
   }
 }
 
-export default PostPage;
+export default DetailsPage;
