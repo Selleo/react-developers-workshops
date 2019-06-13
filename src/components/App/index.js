@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Main from './Main';
 import RouterPage from './RouterPage';
 import ListPage from './Post/ListPage';
+import PostPage from './Post/PostPage';
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <Navbar />
           <Main>
             <Route path={'/posts'} component={ListPage} />
+            <Route path={'/post/:id'} component={PostPage} />
             <Route path={'/router'} component={RouterPage} />
             <Route exact path="/" component={() => <Redirect to="/posts" />} />
           </Main>

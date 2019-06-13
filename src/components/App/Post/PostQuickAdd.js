@@ -30,7 +30,6 @@ class PostQuickAdd extends Component {
 
     this.props.onSubmit({
       ...this.state,
-      id: uniqueId('new'),
       imageUrl: generatePostUrl(),
     });
 
