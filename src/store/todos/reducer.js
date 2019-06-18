@@ -21,6 +21,7 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TODOS_SUCCESS:
       return {
+        ...state,
         byId: {
           ...state.byId,
           ...keyBy(action.payload, 'id'),
@@ -29,6 +30,7 @@ export const reducer = (state = initialState, action) => {
       };
     case FETCH_TODOS_FAILURE:
       return {
+        ...state,
         list: [],
         listError: action.payload,
       };
