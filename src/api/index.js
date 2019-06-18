@@ -20,7 +20,9 @@ export const fetchPosts = ({ limit, search }) =>
     })
     .then(extractData);
 
-export const createPost = post => api.post(`/posts`, post).then(extractData);
+export const createPost = post => api.post('/posts', post).then(extractData);
 
 export const updatePost = post =>
   api.put(`/posts/${post.id}`, post).then(extractData);
+
+export const fetchTodos = () => api.get('/todos').then(extractData);
