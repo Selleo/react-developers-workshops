@@ -10,7 +10,7 @@ class DetailsPage extends Component {
 
   componentDidMount() {
     fetchPost(this.props.match.params)
-      .then(data => this.setState({ post: data }))
+      .then(post => this.setState({ post }))
       .catch(() => {
         this.props.history.push('/posts');
       });

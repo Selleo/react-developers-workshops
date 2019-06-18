@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'query-string';
 
 export const api = axios.create({
   baseURL: 'https://react-developers-workshops-server-einjjcgrqx.now.sh',
@@ -11,14 +10,14 @@ export const fetchPost = ({ id }) => api.get(`/posts/${id}`).then(extractData);
 
 export const fetchPosts = ({ limit, search }) =>
   api
-    .get(
-      `/posts?${qs.stringify({
+    .get('posts', {
+      params: {
         _sort: 'id',
         _order: 'desc',
         _limit: limit,
         title_like: search,
-      })}`,
-    )
+      },
+    })
     .then(extractData);
 
 export const createPost = post => api.post(`/posts`, post).then(extractData);

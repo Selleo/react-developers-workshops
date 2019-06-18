@@ -21,11 +21,7 @@ class App extends Component {
               <Route path={'/post/:id/edit'} component={PostEditPage} />
               <Route path={'/post/:id'} component={PostDetailsPage} />
               <Route path={'/router'} component={RouterPage} />
-              <Route
-                exact
-                path="/"
-                component={() => <Redirect to="/posts" />}
-              />
+              <Redirect exact from="/" to="/posts" />
             </Switch>
           </Main>
         </Fragment>
