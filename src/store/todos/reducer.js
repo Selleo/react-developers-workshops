@@ -1,4 +1,6 @@
-import { ADD_TODO } from './actions';
+import { keyBy } from 'lodash';
+
+import { ADD_TODO, FETCH_TODOS_FAILURE, FETCH_TODOS_SUCCESS } from './actions';
 
 const initialState = {
   byId: {
@@ -12,10 +14,24 @@ const initialState = {
     },
   },
   list: [2, 1],
+  listError: null,
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_TODOS_SUCCESS:
+      return {
+        byId: {
+          ...state.byId,
+          ...keyBy(action.payload, 'id'),
+        },
+        list: action.payload.map(todo => todo.id),
+      };
+    case FETCH_TODOS_FAILURE:
+      return {
+        list: [],
+        listError: action.payload,
+      };
     case ADD_TODO:
       return {
         ...state,
