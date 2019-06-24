@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Provider } from 'react-redux';
@@ -26,11 +26,7 @@ class App extends Component {
               <Route path={'/post/:id/edit'} component={PostEditPage} />
               <Route path={'/post/:id'} component={PostDetailsPage} />
               <Route path={'/router'} component={RouterPage} />
-              <Route
-                exact
-                path="/"
-                component={() => <Redirect to="/posts" />}
-              />
+              <Redirect exact path="/" to="/posts" />
             </Switch>
           </Main>
         </Provider>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { uniqueId } from 'lodash';
 
 import { Input } from '../../Form';
 
