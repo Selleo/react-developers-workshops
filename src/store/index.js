@@ -3,9 +3,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import todos from './todos/reducer';
+import posts from './posts/reducer';
 import counter from './counter';
 
 export default createStore(
-  combineReducers({ todos, counter }),
+  combineReducers({ todos, posts, counter }),
   composeWithDevTools(applyMiddleware(thunk)),
 );

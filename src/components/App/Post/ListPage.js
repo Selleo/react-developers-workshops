@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
 
-import { fetchPosts, createPost } from '../../../api';
+import { createPost } from '../../../api';
 import PostCard from './PostCard';
 import PostQuickAdd from './PostQuickAdd';
+import { fetchPosts, getPosts } from '../../../store/posts';
+import { connect } from 'react-redux';
 
 class ListPage extends Component {
   state = {
@@ -11,7 +13,7 @@ class ListPage extends Component {
   };
 
   componentDidMount() {
-    fetchPosts({ limit: 4 }).then(data => this.setState({ posts: data }));
+    this.props.fetchPosts({ limit: 6 });
   }
 
   addPost = post => {
@@ -29,16 +31,18 @@ class ListPage extends Component {
   };
 
   render() {
+    const { posts } = this.props;
+
     return (
       <Fragment>
-        {this.state.error && (
-          <div className="alert alert-danger">{this.state.error}</div>
-        )}
+        {posts.error && <div className="alert alert-danger">{posts.error}</div>}
 
         <PostQuickAdd onSubmit={this.addPost} />
 
+        {posts.loading && <div>Loading ...</div>}
+
         <div className="d-flex flex-wrap">
-          {this.state.posts.map(post => (
+          {posts.data.map(post => (
             <PostCard key={post.id} {...post} />
           ))}
         </div>
@@ -47,4 +51,15 @@ class ListPage extends Component {
   }
 }
 
-export default ListPage;
+const mapStateToProps = state => ({
+  posts: getPosts(state),
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchPosts: fetchPosts(dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ListPage);
