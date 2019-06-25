@@ -4,10 +4,13 @@ import {
   FETCH_POSTS_STARTED,
   FETCH_POSTS_FAILURE,
   FETCH_POSTS_SUCCESS,
+  FETCH_POST_STARTED,
+  FETCH_POST_SUCCESS,
 } from './actions';
 
 const initialState = {
   byId: {},
+  loadingById: {},
   list: {
     ids: [],
     error: null,
@@ -45,6 +48,26 @@ export const reducer = (state = initialState, action) => {
           ids: [],
           loading: false,
           error: action.payload,
+        },
+      };
+    case FETCH_POST_STARTED:
+      return {
+        ...state,
+        loadingById: {
+          ...state.loadingById,
+          [action.payload.id]: true,
+        },
+      };
+    case FETCH_POST_SUCCESS:
+      return {
+        ...state,
+        loadingById: {
+          ...state.loadingById,
+          [action.payload.id]: false,
+        },
+        byId: {
+          ...state.byId,
+          [action.payload.id]: action.payload,
         },
       };
     default:

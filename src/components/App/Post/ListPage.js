@@ -31,7 +31,7 @@ class ListPage extends Component {
   };
 
   render() {
-    const { posts } = this.props;
+    const { posts, ownProps } = this.props;
 
     return (
       <Fragment>

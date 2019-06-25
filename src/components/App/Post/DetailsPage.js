@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { fetchPost } from '../../../api';
+import { getPost, fetchPost } from '../../../store/posts';
+import { connect } from 'react-redux';
 
 class DetailsPage extends Component {
-  state = {
-    post: {},
-  };
-
   componentDidMount() {
-    fetchPost(this.props.match.params)
-      .then(data => this.setState({ post: data }))
-      .catch(() => {
-        this.props.history.push('/posts');
-      });
+    if (!this.props.post.data.id) {
+      this.props.fetchPost(this.props.match.params);
+    }
   }
 
   render() {
-    const { id, imageUrl, title, body } = this.state.post;
+    const { post } = this.props;
+    const { id, imageUrl, title, body } = post.data;
 
-    if (!id) {
+    if (post.loading) {
       return <div>Loading ...</div>;
     }
 
@@ -34,4 +30,15 @@ class DetailsPage extends Component {
   }
 }
 
-export default DetailsPage;
+const mapStateToProps = (state, ownProps) => ({
+  post: getPost(state, ownProps.match.params.id),
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchPost: fetchPost(dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DetailsPage);
