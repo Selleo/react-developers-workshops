@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { getCounter, decrement, increment } from '../../../store/counter';
-import { getTodos, fetchTodos, getTodosError } from '../../../store/todos';
+import { getTodos, fetchTodos } from '../../../store/todos';
 
 class ListPage extends Component {
   componentDidMount() {
@@ -10,7 +10,7 @@ class ListPage extends Component {
   }
 
   render() {
-    const { counter, decrement, increment, todos, todosError } = this.props;
+    const { counter, decrement, increment, todos } = this.props;
 
     return (
       <div>
@@ -21,11 +21,13 @@ class ListPage extends Component {
           <button onClick={increment}>+</button>
         </div>
 
-        {todosError ? (
-          <div>{todosError}</div>
+        {todos.loading && <div>Loading ...</div>}
+
+        {todos.error ? (
+          <div>{todos.error}</div>
         ) : (
           <ul>
-            {todos.map(todo => (
+            {todos.data.map(todo => (
               <li key={todo.id}>{todo.text}</li>
             ))}
           </ul>
@@ -38,7 +40,6 @@ class ListPage extends Component {
 const mapStateToProps = state => ({
   counter: getCounter(state),
   todos: getTodos(state),
-  todosError: getTodosError(state),
 });
 
 const mapDispatchToProps = dispatch => ({

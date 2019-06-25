@@ -1,12 +1,11 @@
 import * as api from '../../api';
 
-export const ADD_TODO = 'ADD_TODO';
-export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';
-export const FETCH_TODOS_FAILURE = 'FETCH_TODOS_FAILURE';
+export const FETCH_TODOS_STARTED = 'todos/FETCH_STARTED';
+export const FETCH_TODOS_SUCCESS = 'todos/FETCH_SUCCESS';
+export const FETCH_TODOS_FAILURE = 'todos/FETCH_FAILURE';
 
-export const addTodo = todo => ({
-  type: ADD_TODO,
-  payload: todo,
+export const fetchTodosStarted = () => ({
+  type: FETCH_TODOS_STARTED,
 });
 
 export const fetchTodosSuccess = todos => ({
@@ -19,8 +18,11 @@ export const fetchTodosFailure = error => ({
   payload: error,
 });
 
-export const fetchTodos = dispatch =>
-  api
+export const fetchTodos = dispatch => {
+  dispatch(fetchTodosStarted());
+
+  return api
     .fetchTodos()
     .then(todos => dispatch(fetchTodosSuccess(todos)))
     .catch(res => dispatch(fetchTodosFailure(String(res))));
+};
