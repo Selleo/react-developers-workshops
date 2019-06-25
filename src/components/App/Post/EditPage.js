@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
-import { fetchPost, updatePost } from '../../../api';
+import { updatePost } from '../../../api';
 import { Input } from '../../Form';
+import { getPost, fetchPost } from '../../../store/posts';
+import { connect } from 'react-redux';
 
 class EditPage extends Component {
   state = {
@@ -19,23 +21,28 @@ class EditPage extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    updatePost(this.state.post).then(post =>
-      this.props.history.push(`/post/${post.id}`),
-    );
+
+    const post = {
+      ...this.props.post.data,
+      ...this.state.post,
+    };
+
+    updatePost(post).then(({ id }) => this.props.history.push(`/post/${id}`));
   };
 
   componentDidMount() {
-    fetchPost(this.props.match.params)
-      .then(data => this.setState({ post: data }))
-      .catch(() => {
-        this.props.history.push('/posts');
-      });
+    if (!this.props.post.data.id) {
+      this.props.fetchPost(this.props.match.params);
+    }
   }
 
   render() {
-    const { post } = this.state;
+    const post = {
+      ...this.props.post.data,
+      ...this.state.post,
+    };
 
-    if (!post.id) {
+    if (this.props.post.loading) {
       return <div>Loading ...</div>;
     }
 
@@ -70,4 +77,15 @@ class EditPage extends Component {
   }
 }
 
-export default EditPage;
+const mapStateToProps = (state, ownProps) => ({
+  post: getPost(state, ownProps.match.params.id),
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchPost: fetchPost(dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditPage);
