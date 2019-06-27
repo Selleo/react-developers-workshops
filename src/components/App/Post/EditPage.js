@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import { updatePost } from '../../../api';
 import { Input } from '../../Form';
-import { getPost, fetchPost } from '../../../store/posts';
+import { getPost, fetchPost, updatePost } from '../../../store/posts';
 import { connect } from 'react-redux';
 
 class EditPage extends Component {
@@ -27,7 +26,7 @@ class EditPage extends Component {
       ...this.state.post,
     };
 
-    updatePost(post).then(({ id }) => this.props.history.push(`/post/${id}`));
+    this.props.updatePost(post);
   };
 
   componentDidMount() {
@@ -42,7 +41,7 @@ class EditPage extends Component {
       ...this.state.post,
     };
 
-    if (this.props.post.loading) {
+    if (this.props.post.loading && !this.props.post.data) {
       return <div>Loading ...</div>;
     }
 
@@ -82,6 +81,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  updatePost: updatePost(dispatch),
   fetchPost: fetchPost(dispatch),
 });
 

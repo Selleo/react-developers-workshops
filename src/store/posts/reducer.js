@@ -6,6 +6,8 @@ import {
   FETCH_POSTS_SUCCESS,
   FETCH_POST_STARTED,
   FETCH_POST_SUCCESS,
+  UPDATE_POST_STARTED,
+  UPDATE_POST_SUCCESS,
 } from './actions';
 
 const initialState = {
@@ -51,6 +53,7 @@ export const reducer = (state = initialState, action) => {
         },
       };
     case FETCH_POST_STARTED:
+    case UPDATE_POST_STARTED:
       return {
         ...state,
         loadingById: {
@@ -59,6 +62,7 @@ export const reducer = (state = initialState, action) => {
         },
       };
     case FETCH_POST_SUCCESS:
+    case UPDATE_POST_SUCCESS:
       return {
         ...state,
         loadingById: {
