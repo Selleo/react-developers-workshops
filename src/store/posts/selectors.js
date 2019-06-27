@@ -1,5 +1,6 @@
 export const getPost = (state, id) => ({
   loading: state.posts.loadingById[id],
+  errors: state.posts.errorsById[id],
   data: state.posts.byId[id] || {},
 });
 

@@ -50,9 +50,9 @@ export const updatePostSuccess = todo => ({
   payload: todo,
 });
 
-export const updatePostFailure = error => ({
+export const updatePostFailure = (id, errors) => ({
   type: UPDATE_POST_FAILURE,
-  payload: error,
+  payload: { id, errors },
 });
 
 export const fetchPosts = dispatch => params => {
@@ -73,6 +73,14 @@ export const fetchPost = dispatch => params => {
     .catch(res => dispatch(fetchPostFailure(String(res))));
 };
 
+const normalizeErrors = res => {
+  const errors = {};
+  res.response.data.errors.forEach(
+    ({ field, messages }) => (errors[field] = messages),
+  );
+  return errors;
+};
+
 export const updatePost = dispatch => params => {
   dispatch(updatePostStarted(params));
 
@@ -82,5 +90,5 @@ export const updatePost = dispatch => params => {
       dispatch(updatePostSuccess(todo));
       history.push(`/post/${todo.id}`);
     })
-    .catch(res => dispatch(updatePostFailure(String(res))));
+    .catch(res => dispatch(updatePostFailure(params.id, normalizeErrors(res))));
 };

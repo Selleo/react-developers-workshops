@@ -40,6 +40,7 @@ class EditPage extends Component {
       ...this.props.post.data,
       ...this.state.post,
     };
+    const { errors = {} } = this.props.post;
 
     if (this.props.post.loading && !this.props.post.data) {
       return <div>Loading ...</div>;
@@ -53,18 +54,21 @@ class EditPage extends Component {
             type="text"
             name="imageUrl"
             value={post.imageUrl}
+            errors={errors}
             onChange={this.handleChange}
           />
           <Input
             type="text"
             name="title"
             value={post.title}
+            errors={errors}
             onChange={this.handleChange}
           />
           <Input
             type="text"
             name="body"
             value={post.body}
+            errors={errors}
             onChange={this.handleChange}
           />
           <button type="submit" className="btn btn-primary">

@@ -8,11 +8,13 @@ import {
   FETCH_POST_SUCCESS,
   UPDATE_POST_STARTED,
   UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
 } from './actions';
 
 const initialState = {
   byId: {},
   loadingById: {},
+  errorsById: {},
   list: {
     ids: [],
     error: null,
@@ -72,6 +74,18 @@ export const reducer = (state = initialState, action) => {
         byId: {
           ...state.byId,
           [action.payload.id]: action.payload,
+        },
+      };
+    case UPDATE_POST_FAILURE:
+      return {
+        ...state,
+        loadingById: {
+          ...state.loadingById,
+          [action.payload.id]: false,
+        },
+        errorsById: {
+          ...state.errorsById,
+          [action.payload.id]: action.payload.errors,
         },
       };
     default:
