@@ -1,4 +1,5 @@
 import { keyBy } from 'lodash';
+import produce from 'immer';
 
 import { FETCH_POSTS, FETCH_POST, UPDATE_POST } from './actionTypes';
 
@@ -13,75 +14,45 @@ const initialState = {
   },
 };
 
-export const reducer = (state = initialState, action) => {
+export const reducer = produce((state = initialState, action) => {
   switch (action.type) {
     case FETCH_POSTS.STARTED:
-      return {
-        ...state,
-        list: {
-          ...state.list,
-          loading: true,
-        },
-      };
+      state.list.loading = true;
+      return;
     case FETCH_POSTS.SUCCESS:
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          ...keyBy(action.payload, 'id'),
-        },
-        list: {
-          ids: action.payload.map(({ id }) => id),
-          loading: false,
-          error: null,
-        },
+      state.byId = {
+        ...state.byId,
+        ...keyBy(action.payload, 'id'),
       };
+      state.list = {
+        ids: action.payload.map(({ id }) => id),
+        loading: false,
+        error: null,
+      };
+      return;
     case FETCH_POSTS.FAILURE:
-      return {
-        ...state,
-        list: {
-          ids: [],
-          loading: false,
-          error: action.payload,
-        },
+      state.list = {
+        ids: [],
+        loading: false,
+        error: action.payload,
       };
+      return;
     case FETCH_POST.STARTED:
     case UPDATE_POST.STARTED:
-      return {
-        ...state,
-        loadingById: {
-          ...state.loadingById,
-          [action.payload.id]: true,
-        },
-      };
+      state.loadingById[action.payload.id] = true;
+      return;
     case FETCH_POST.SUCCESS:
     case UPDATE_POST.SUCCESS:
-      return {
-        ...state,
-        loadingById: {
-          ...state.loadingById,
-          [action.payload.id]: false,
-        },
-        byId: {
-          ...state.byId,
-          [action.payload.id]: action.payload,
-        },
-      };
+      state.loadingById[action.payload.id] = false;
+      state.byId[action.payload.id] = action.payload;
+      return;
     case UPDATE_POST.FAILURE:
-      return {
-        ...state,
-        loadingById: {
-          ...state.loadingById,
-          [action.payload.id]: false,
-        },
-        errorsById: {
-          ...state.errorsById,
-          [action.payload.id]: action.payload.errors,
-        },
-      };
+      state.loadingById[action.payload.id] = false;
+      state.errorsById[action.payload.id] = action.payload.errors;
+      return;
     default:
       return state;
   }
-};
+});
 
 export default reducer;
