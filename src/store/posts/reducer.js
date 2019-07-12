@@ -1,15 +1,6 @@
 import { keyBy } from 'lodash';
 
-import {
-  FETCH_POSTS_STARTED,
-  FETCH_POSTS_FAILURE,
-  FETCH_POSTS_SUCCESS,
-  FETCH_POST_STARTED,
-  FETCH_POST_SUCCESS,
-  UPDATE_POST_STARTED,
-  UPDATE_POST_SUCCESS,
-  UPDATE_POST_FAILURE,
-} from './actions';
+import { FETCH_POSTS, FETCH_POST, UPDATE_POST } from './actionTypes';
 
 const initialState = {
   byId: {},
@@ -24,7 +15,7 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_POSTS_STARTED:
+    case FETCH_POSTS.STARTED:
       return {
         ...state,
         list: {
@@ -32,7 +23,7 @@ export const reducer = (state = initialState, action) => {
           loading: true,
         },
       };
-    case FETCH_POSTS_SUCCESS:
+    case FETCH_POSTS.SUCCESS:
       return {
         ...state,
         byId: {
@@ -45,7 +36,7 @@ export const reducer = (state = initialState, action) => {
           error: null,
         },
       };
-    case FETCH_POSTS_FAILURE:
+    case FETCH_POSTS.FAILURE:
       return {
         ...state,
         list: {
@@ -54,8 +45,8 @@ export const reducer = (state = initialState, action) => {
           error: action.payload,
         },
       };
-    case FETCH_POST_STARTED:
-    case UPDATE_POST_STARTED:
+    case FETCH_POST.STARTED:
+    case UPDATE_POST.STARTED:
       return {
         ...state,
         loadingById: {
@@ -63,8 +54,8 @@ export const reducer = (state = initialState, action) => {
           [action.payload.id]: true,
         },
       };
-    case FETCH_POST_SUCCESS:
-    case UPDATE_POST_SUCCESS:
+    case FETCH_POST.SUCCESS:
+    case UPDATE_POST.SUCCESS:
       return {
         ...state,
         loadingById: {
@@ -76,7 +67,7 @@ export const reducer = (state = initialState, action) => {
           [action.payload.id]: action.payload,
         },
       };
-    case UPDATE_POST_FAILURE:
+    case UPDATE_POST.FAILURE:
       return {
         ...state,
         loadingById: {
