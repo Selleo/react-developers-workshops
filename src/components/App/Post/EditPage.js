@@ -30,9 +30,7 @@ class EditPage extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.post.data.id) {
-      this.props.fetchPost(this.props.match.params);
-    }
+    this.props.fetchPost(this.props.match.params);
   }
 
   render() {

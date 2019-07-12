@@ -40,6 +40,7 @@ export const reducer = produce((state = initialState, action) => {
     case FETCH_POST.STARTED:
     case UPDATE_POST.STARTED:
       state.loadingById[action.payload.id] = true;
+      delete state.errorsById[action.payload.id];
       return;
     case FETCH_POST.SUCCESS:
     case UPDATE_POST.SUCCESS:
