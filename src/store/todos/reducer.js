@@ -1,64 +1,23 @@
-import { keyBy } from 'lodash';
+import produce from 'immer';
 
-import {
-  FETCH_TODOS_STARTED,
-  FETCH_TODOS_FAILURE,
-  FETCH_TODOS_SUCCESS,
-} from './actions';
+import { FETCH_TODOS } from './actionTypes';
+import { asyncFetchListReducer } from '../../utils';
 
 const initialState = {
-  byId: {
-    1: {
-      id: 1,
-      text: 'Todo 1',
-    },
-    2: {
-      id: 2,
-      text: 'Todo 2',
-    },
-  },
+  byId: {},
+  loadingById: {},
+  errorsById: {},
   list: {
-    ids: [2, 1],
+    ids: [],
     error: null,
     loading: null,
   },
 };
 
-export const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case FETCH_TODOS_STARTED:
-      return {
-        ...state,
-        list: {
-          ...state.list,
-          loading: true,
-        },
-      };
-    case FETCH_TODOS_SUCCESS:
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          ...keyBy(action.payload, 'id'),
-        },
-        list: {
-          ids: action.payload.map(({ id }) => id),
-          loading: false,
-          error: null,
-        },
-      };
-    case FETCH_TODOS_FAILURE:
-      return {
-        ...state,
-        list: {
-          ids: [],
-          loading: false,
-          error: action.payload,
-        },
-      };
-    default:
-      return state;
-  }
-};
+export const reducer = produce((state = initialState, action) => {
+  asyncFetchListReducer(FETCH_TODOS)(state, action);
+
+  return state;
+});
 
 export default reducer;
