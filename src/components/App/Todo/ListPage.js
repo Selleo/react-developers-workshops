@@ -45,7 +45,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   increment: () => dispatch(increment()),
   decrement: () => dispatch(decrement()),
-  fetchTodos: () => fetchTodos(dispatch),
+  fetchTodos: fetchTodos(dispatch),
 });
 
 export default connect(
