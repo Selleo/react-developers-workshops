@@ -17,7 +17,7 @@ class App extends Component {
           <Navbar />
           <Main>
             <Switch>
-              <Route path={'/posts'} component={PostListPage} />
+              <Route path='/posts' component={PostListPage} />
               <Route path={'/post/:id/edit'} component={PostEditPage} />
               <Route path={'/post/:id'} component={PostDetailsPage} />
               <Route path={'/router'} component={RouterPage} />
