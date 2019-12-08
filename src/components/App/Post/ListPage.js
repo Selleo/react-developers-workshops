@@ -1,29 +1,40 @@
 import React, { Component, Fragment } from 'react';
-import { times } from 'lodash';
-import faker from 'faker';
 
+import { fetchPosts, createPost } from '../../../api';
 import PostCard from './PostCard';
 import PostQuickAdd from './PostQuickAdd';
 
 class ListPage extends Component {
   state = {
-    posts: times(3).map(id => ({
-      id,
-      title: faker.lorem.sentence(),
-      body: faker.lorem.sentences(10),
-      imageUrl: `https://picsum.photos/320/240?image=${120 + id}`,
-    })),
+    posts: [],
+    error: null,
   };
 
+  componentDidMount() {
+    fetchPosts({ limit: 4 }).then(data => this.setState({ posts: data }));
+  }
+
   addPost = post => {
-    this.setState({
-      posts: [post, ...this.state.posts],
-    });
+    this.setState({ error: null });
+
+    createPost(post)
+      .then(data => {
+        this.setState({
+          posts: [data, ...this.state.posts],
+        });
+      })
+      .catch(error => {
+        this.setState({ error: error.message });
+      });
   };
 
   render() {
     return (
       <Fragment>
+        {this.state.error && (
+          <div className="alert alert-danger">{this.state.error}</div>
+        )}
+
         <PostQuickAdd onSubmit={this.addPost} />
 
         <div className="d-flex flex-wrap">
